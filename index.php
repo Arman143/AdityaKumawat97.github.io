@@ -1,72 +1,35 @@
 <?php 
-include("includes/config.php");
-	if(isset($_SESSION['userLoggedIn'])){
-		$userLoggedIn = $_SESSION['userLoggedIn'];
-	}
-	else{
-		header("Location: register.php");
-	}
- ?>
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<title>	</title>
-</head>
-<body>
-	<div id="nowPlayingBarContainer">
-		<div id="nowPlayingBar">
-			<div id="nowPlayingLeft">
-				
-			</div>
-			<div id="nowPlayingCenter">
-				<div class="content playerControls">
-					
-					<div class="buttons">
-						<button class="controlButton shuffle" title="Shuffle Button">
-							<img src="assets/images/icons/shuffle.png" alt="Shuffle">
-						</button>
+	include("includes/header.php") 
+?>
 
-						<button class="controlButton previous" title="Shuffle Button">
-							<img src="assets/images/icons/previous.png" alt="Previous">
-						</button>
+<h1 class="pageHeadingBig">You might Also Like</h1>
 
-						<button class="controlButton play" title="Shuffle Button">
-							<img src="assets/images/icons/play.png" alt="Play">
-						</button>
-
-							<button class="controlButton pause" title="Shuffle Button" style="display:none;">
-							<img src="assets/images/icons/pause.png" alt="Pause">
-						</button>
-
-						<button class="controlButton next" title="Shuffle Button">
-							<img src="assets/images/icons/next.png" alt="Next">
-						</button>
-
-						<button class="controlButton repeat" title="Shuffle Button">
-							<img src="assets/images/icons/repeat.png" alt="Repeat">
-						</button>
-					</div>
-					<div class="playbackBar">
-						<span class="progressTime current">
-							0.00
-						</span>
-						<div class="progressBar">
-							<div class="progressBarBg">
-								<div class="progress"></div>
+<div class="gridViewContainer">
+	
+	<?php 
+		$albumQuery = mysqli_query($con, "SELECT * FROM albums ORDER BY RAND() LIMIT 10");
+		while($row = mysqli_fetch_array($albumQuery)){
+			//takes query and converts result to an array
+			
+			echo "<div class='gridViewItem'>
+					<a href='album.php?id=".$row['id']. "'>
+						<img src='" . $row['artworkPath'] . "'>
+							<div class='gridViewInfo'>".$row['title'] . "
 							</div>
-						</div>
-						<span class="progressTime remaining">0.00</span>
-					</div>
-
-				</div>
+					</a>
+				  	</div>";
+		}
 
 
-			</div>
-			<div id="nowPlayingRight">
-				
-			</div>	
-		</div> 
-	</div>
+	 ?>
 
-</body>
-</html>
+
+</div>
+
+
+
+
+
+<?php 
+	include("includes/footer.php")
+ ?>
